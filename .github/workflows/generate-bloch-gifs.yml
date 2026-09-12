@@ -21,7 +21,7 @@ jobs:
           python-version: "3.11"
 
       - run: python -m pip install --upgrade pip
-      - run: pip install "numpy<3" "matplotlib<4" "qutip>=5,<6" "imageio>=2,<3" pillow
+      - run: pip install -r requirements-gifs.txt
       - run: python tools/generate_bloch_gifs.py
 
       - run: |
