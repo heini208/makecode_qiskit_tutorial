@@ -2,7 +2,7 @@
 
 ## Willkommen @showdialog
 
-**Tutorial-Version 0.0.3, Stand 12.09.2026**
+**Tutorial-Version 0.0.4, Stand 12.09.2026**
 
 Wenn du diese Zeile siehst, ist die aktuell überarbeitete Version des Tutorials geladen.
 
@@ -314,7 +314,7 @@ Bisher haben wir hauptsächlich 180°-Drehungen verwendet. Mit Rotationsgattern 
 
 ![RX mit 90 Grad](https://raw.githubusercontent.com/heini208/makecode_qiskit_tutorial/main/images/rx_pi_2.gif)
 
-1. Öffne **MicroQiskit → Qiskit Erweitert → Gatter**.
+1. Öffne **MicroQiskit → Qiskit Grundlagen → Gatter**.
 2. Ziehe den Rotationsblock vor die Messung.
 3. Öffne das Gate-Dropdown und wähle **RX**.
 4. Stelle den Winkel zuerst auf **90°**.
@@ -639,5 +639,5 @@ Dabei hast du den grundlegenden Qiskit-Ablauf verwendet:
 Und aus einem echten Quantenergebnis wird nun direkt eine Aktion auf dem Calliope.
 
 ```package
-qiskit=github:heini208/makecode-qiskit#v0.1.2
+qiskit=github:heini208/makecode-qiskit#v0.1.5
 ```
