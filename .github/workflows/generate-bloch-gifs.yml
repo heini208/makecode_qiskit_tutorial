@@ -1,0 +1,35 @@
+name: Generate Bloch GIFs
+
+on:
+  push:
+    paths:
+      - tools/generate_bloch_gifs.py
+      - .github/workflows/generate-bloch-gifs.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: python -m pip install --upgrade pip
+      - run: pip install "numpy<3" "matplotlib<4" "qutip>=5,<6" "imageio>=2,<3" pillow
+      - run: python tools/generate_bloch_gifs.py
+
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add images/*.gif
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "Generate Bloch sphere GIFs"
+          git push
