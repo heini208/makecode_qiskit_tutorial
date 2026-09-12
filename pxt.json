@@ -1,0 +1,21 @@
+{
+    "name": "makecode-qiskit-tutorial",
+    "version": "0.0.1",
+    "description": "Interactive German MicroQiskit tutorial for the Calliope mini",
+    "dependencies": {
+        "core": "*",
+        "v3": "*"
+    },
+    "files": [
+        "main.ts",
+        "README.md",
+        "tutorial.md"
+    ],
+    "targetVersions": {
+        "target": "8.1.13",
+        "targetId": "calliopemini"
+    },
+    "supportedTargets": [
+        "calliopemini"
+    ]
+}
