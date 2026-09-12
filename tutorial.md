@@ -2,6 +2,10 @@
 
 ## Willkommen @showdialog
 
+**Tutorial-Version 0.0.2, Stand 12.09.2026**
+
+Wenn du diese Zeile siehst, ist die aktuell überarbeitete Version des Tutorials geladen.
+
 In diesem Tutorial programmierst du selbst einen einfachen Quantencomputer mit **MicroQiskit** und dem **Calliope mini**.
 
 Dabei geht es nicht nur um Theorie. Jede wichtige Gate-Operation wird direkt im MakeCode-Editor ausprobiert und das Messergebnis wird mit **Taste A** auf der LED-Matrix angezeigt.
