@@ -1,6 +1,6 @@
 {
     "name": "makecode-qiskit-tutorial",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "description": "Interactive German MicroQiskit tutorial for the Calliope mini",
     "dependencies": {
         "core": "*",
@@ -12,7 +12,8 @@
         "tutorial.md",
         "tutorial-v0-0-2.md",
         "tutorial-v0-0-3.md",
-        "tutorial-v0-0-4.md"
+        "tutorial-v0-0-4.md",
+        "tutorial-v0-0-5.md"
     ],
     "targetVersions": {
         "target": "8.1.13",
