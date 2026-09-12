@@ -2,282 +2,462 @@
 
 ## Willkommen @showdialog
 
-In diesem Tutorial lernst du die Grundlagen des Quantencomputings direkt mit dem **Calliope mini** und **MicroQiskit**.
+In diesem Tutorial programmierst du selbst einen einfachen Quantencomputer mit **MicroQiskit** und dem **Calliope mini**.
 
-Du lernst zuerst, was Qubits und Quantengatter sind. Danach baust du eigene Quantenschaltkreise und erzeugst Quantenzufall.
+Dabei geht es nicht nur um Theorie. Jede wichtige Gate-Operation wird direkt im MakeCode-Editor ausprobiert und das Messergebnis wird mit **Taste A** auf der LED-Matrix angezeigt.
 
-## Was sind Quanten? @showdialog
+Die MicroQiskit-Erweiterung wird für dieses Tutorial automatisch geladen.
 
-In der Quantenphysik können bestimmte physikalische Größen nur in **diskreten Portionen** auftreten. Solche Portionen nennt man Quanten.
+## Quantencomputing in Kürze @showdialog
 
-Quantenmechanische Systeme zeigen Eigenschaften, die wir aus dem Alltag nicht kennen. Für das Quantencomputing sind besonders **Superposition**, **Verschränkung** und **Interferenz** wichtig.
+Ein klassischer Computer arbeitet mit **Bits**, die entweder `0` oder `1` sind.
 
-Diese Begriffe untersuchen wir Schritt für Schritt anhand eigener Quantenschaltkreise.
-
-## Warum Quantencomputer? @showdialog
-
-Klassische Computer arbeiten mit Bits und sind für sehr viele Aufgaben hervorragend geeignet.
-
-Quantencomputer verwenden zusätzlich quantenmechanische Effekte. Für bestimmte Problemklassen können daraus neue Rechenverfahren entstehen, die sich von klassischen Verfahren grundlegend unterscheiden.
-
-Ein Quantencomputer ist deshalb kein allgemein schnellerer Ersatz für einen klassischen Computer.
-
-## Vom Bit zum Qubit @showdialog
-
-Ein klassisches **Bit** hat den Wert **0** oder **1**.
-
-Ein Quantencomputer verwendet **Qubits**. Ein Qubit besitzt ebenfalls zwei Grundzustände:
+Ein Quantencomputer arbeitet mit **Qubits**. Ein Qubit besitzt ebenfalls die Grundzustände
 
 * `|0⟩`
 * `|1⟩`
 
-Zusätzlich kann sich ein Qubit in einer **Superposition** dieser beiden Zustände befinden.
+kann sich aber auch in einer **Superposition** aus beiden Zuständen befinden.
 
-Erst bei einer Messung erhalten wir einen klassischen Wert, also `0` oder `1`.
+Quantencomputer nutzen dafür Eigenschaften der Quantenphysik wie **Superposition**, **Verschränkung** und **Interferenz**.
+
+Sie sind nicht für jede Aufgabe schneller als klassische Computer. Für bestimmte Problemklassen ermöglichen sie aber andere Rechenverfahren.
+
+## Der Aufbau eines Qiskit-Programms @showdialog
+
+Ein einfaches Qiskit-Programm folgt fast immer demselben Ablauf:
+
+**Circuit erstellen → Qubits verändern → Qubits messen → Circuit ausführen → Job auslesen**
+
+Ein **Circuit** enthält die Qubits und die Operationen, die auf ihnen ausgeführt werden.
+
+**Gates** verändern den Zustand eines Qubits.
+
+Eine **Messung** wandelt den Quantenzustand in ein klassisches Ergebnis um. Das Messergebnis wird in einem **klassischen Bit** gespeichert.
+
+Wird der Circuit ausgeführt, entsteht ein **Job**. Aus diesem Job können wir anschließend die Messergebnisse auslesen.
+
+Genau diesen Ablauf bauen wir jetzt einmal vollständig auf. Danach verändern wir nur noch die Gates und beobachten, was passiert.
 
 ## Die Bloch-Kugel @showdialog
 
-Die **Bloch-Kugel** ist eine geometrische Darstellung der Zustände eines einzelnen Qubits.
+Die **Bloch-Kugel** ist eine geometrische Darstellung des Zustands eines einzelnen Qubits.
 
-Der Nordpol steht für `|0⟩`, der Südpol für `|1⟩`. Andere Punkte auf der Oberfläche stellen Superpositionszustände dar.
+Der Nordpol entspricht `|0⟩`. Dort erhalten wir bei einer Messung sicher `0`.
 
-Quantengatter verändern den Zustand des Qubits. Auf der Bloch-Kugel können wir uns diese Veränderungen als Drehungen vorstellen.
+Der Südpol entspricht `|1⟩`. Dort erhalten wir sicher `1`.
 
-![Bloch-Kugel mit Qubit im Zustand 0](https://raw.githubusercontent.com/heini208/makecode_qiskit_tutorial/main/images/x_gate.gif)
+Auf dem Äquator liegen Zustände, bei denen `0` und `1` bei einer Messung jeweils mit 50 % Wahrscheinlichkeit auftreten.
 
-## MicroQiskit @showdialog
+Bei allen anderen Punkten hängt die Wahrscheinlichkeit von der Höhe des Zustands auf der Kugel ab. Die Position um die Z-Achse beschreibt zusätzlich die **Phase**. Diese Phase kann spätere Gate-Operationen beeinflussen, ist bei einer direkten Messung in `0` oder `1` aber nicht allein sichtbar.
 
-Für die Übungen verwenden wir die MakeCode-Erweiterung **MicroQiskit**.
+Quantengatter können wir uns auf der Bloch-Kugel als Drehungen vorstellen.
 
-Die Erweiterung wird für dieses Tutorial **automatisch geladen**.
+## MicroQiskit im Werkzeugkasten @showdialog
 
-Wenn du sie später in einem eigenen MakeCode-Projekt verwenden möchtest:
+Die Erweiterung **MicroQiskit** ist in diesem Tutorial bereits geladen.
 
-1. Öffne ein neues Projekt im Calliope MakeCode-Editor.
-2. Öffne unter **Fortgeschritten** den Bereich **Erweiterungen**.
-3. Suche nach `https://github.com/heini208/makecode-qiskit`.
-4. Wähle die Erweiterung aus.
+Im Werkzeugkasten findest du:
 
-Danach erscheint links im Werkzeugkasten die Kategorie **MicroQiskit**.
+* **MicroQiskit → Qiskit Grundlagen → Circuits**
+* **MicroQiskit → Qiskit Grundlagen → Gatter**
+* **MicroQiskit → Qiskit Grundlagen → Messung**
+* **MicroQiskit → Qiskit Grundlagen → Simulation**
+* **MicroQiskit → Qiskit Grundlagen → Ergebnisse**
+* **MicroQiskit → Qiskit Erweitert** für zusätzliche Operationen
 
-## Unser erster Circuit
+In einem eigenen MakeCode-Projekt kannst du MicroQiskit später über **Erweiterungen** mit dieser Adresse importieren:
 
-Erstelle jetzt einen Quantenschaltkreis mit **einem Qubit** und **einem klassischen Bit**.
+`https://github.com/heini208/makecode-qiskit`
 
-- :mouse pointer: Öffne links im Werkzeugkasten **MicroQiskit**.
-- :mouse pointer: Öffne **Qiskit Grundlagen**.
-- :mouse pointer: Suche im Bereich **Circuits** den Block zum Erstellen eines Circuits.
-- :mouse pointer: Ziehe den Block in den Arbeitsbereich und lasse beide Werte auf `1`.
+## 1. Circuit erstellen
 
-Der erste Wert legt die Anzahl der Qubits fest. Der zweite Wert legt die Anzahl der klassischen Bits fest, in denen später Messergebnisse gespeichert werden.
+Wir beginnen mit einem Circuit aus **einem Qubit** und **einem klassischen Bit**.
+
+1. Öffne **MicroQiskit**.
+2. Öffne **Qiskit Grundlagen**.
+3. Öffne **Circuits**.
+4. Ziehe **Circuit mit 1 Qubits und 1 klassischen Bits erstellen** in den Arbeitsbereich.
+
+Der erste Wert ist die Anzahl der Qubits. Der zweite Wert ist die Anzahl der klassischen Bits für Messergebnisse.
 
 ```blocks
 // @highlight
 let circuit = microQiskit.createCircuit(1, 1)
 ```
 
-## Das X-Gatter
+## 2. Qubit messen
 
-Das Qubit startet im Zustand `|0⟩`.
+Noch verändern wir das Qubit nicht. Ein neu erstelltes Qubit startet im Zustand `|0⟩`.
 
-Das **X-Gatter** dreht den Zustand um 180° um die X-Achse. Dadurch wird aus `|0⟩` der Zustand `|1⟩`.
+Jetzt fügen wir die Messung hinzu.
+
+1. Öffne **MicroQiskit → Qiskit Grundlagen → Messung**.
+2. Ziehe **alle Qubits in Circuit messen** unter die Circuit-Erstellung.
+
+```blocks
+let circuit = microQiskit.createCircuit(1, 1)
+// @highlight
+microQiskit.measureAll(circuit)
+```
+
+Die Messung schreibt den Zustand von Qubit 0 in das klassische Bit 0.
+
+## 3. Mit Taste A ausführen
+
+Der Circuit ist jetzt beschrieben, aber noch nicht ausgeführt.
+
+Wir wollen ihn jedes Mal ausführen, wenn **Taste A** gedrückt wird.
+
+1. Öffne **Eingabe**.
+2. Ziehe **wenn Knopf A geklickt** in den Arbeitsbereich.
+3. Öffne **MicroQiskit → Qiskit Grundlagen → Simulation**.
+4. Ziehe **Circuit lokal ausführen** in den Knopf-A-Block.
+
+Beim Ausführen entsteht ein **Job**. Der Job enthält die Ergebnisse dieser Ausführung.
+
+```blocks
+let circuit = microQiskit.createCircuit(1, 1)
+microQiskit.measureAll(circuit)
+
+input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
+    // @highlight
+    let job = microQiskit.runSimulationBasic(circuit)
+})
+```
+
+Der Grundlagen-Block führt automatisch 1024 Shots aus. Ein Shot ist eine einzelne Ausführung mit Messung.
+
+## 4. Messergebnis anzeigen
+
+Jetzt lesen wir ein Messergebnis aus dem Job und zeigen es auf dem Calliope an.
+
+1. Öffne **MicroQiskit → Qiskit Grundlagen → Ergebnisse**.
+2. Nimm **Bits als Text von Job**.
+3. Öffne **Grundlagen**.
+4. Ziehe **zeige Text** in den Knopf-A-Block.
+5. Stecke **Bits als Text von Job** in **zeige Text**.
+
+```blocks
+let circuit = microQiskit.createCircuit(1, 1)
+microQiskit.measureAll(circuit)
+
+input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
+    let job = microQiskit.runSimulationBasic(circuit)
+    // @highlight
+    basic.showString(microQiskit.getJobResultText(job))
+})
+```
+
+Drücke im Simulator oder auf dem Calliope **Taste A**.
+
+Da wir das Qubit noch nicht verändert haben, sollte immer `0` erscheinen.
+
+Damit steht jetzt unser vollständiger Ablauf:
+
+**Circuit → Messung → Job → Ergebnis**
+
+Als Nächstes verändern wir das Qubit mit Gates.
+
+## 5. Das X-Gatter
+
+Das **X-Gatter** dreht das Qubit um 180° um die X-Achse.
+
+Aus `|0⟩` wird `|1⟩`.
 
 ![X-Gatter auf der Bloch-Kugel](https://raw.githubusercontent.com/heini208/makecode_qiskit_tutorial/main/images/x_gate.gif)
 
-- :mouse pointer: Öffne **MicroQiskit → Qiskit Grundlagen → Gatter**.
-- :mouse pointer: Ziehe den Block zum Anwenden eines Grundgatters unter die Circuit-Erstellung.
-- :mouse pointer: Wähle **X** und lasse **Qubit 0** eingestellt.
+1. Öffne **MicroQiskit → Qiskit Grundlagen → Gatter**.
+2. Ziehe den Block zum Anwenden eines Grundgatters zwischen Circuit-Erstellung und Messung.
+3. Wähle im Dropdown **X**.
+4. Lasse **Qubit 0** eingestellt.
+5. Drücke danach **Taste A**.
 
 ```blocks
 let circuit = microQiskit.createCircuit(1, 1)
 // @highlight
 microQiskit.applyBasicGate(circuit, microQiskit.BasicGate.X, 0)
+microQiskit.measureAll(circuit)
+
+input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
+    let job = microQiskit.runSimulationBasic(circuit)
+    basic.showString(microQiskit.getJobResultText(job))
+})
 ```
 
-## Das Y-Gatter
+Jetzt sollte immer `1` erscheinen.
 
-Auch das **Y-Gatter** entspricht einer Drehung um 180°. Diesmal erfolgt die Drehung um die Y-Achse.
+## 6. Das Y-Gatter
+
+Das **Y-Gatter** dreht ebenfalls um 180°, aber um die Y-Achse.
 
 ![Y-Gatter auf der Bloch-Kugel](https://raw.githubusercontent.com/heini208/makecode_qiskit_tutorial/main/images/y_gate.gif)
 
-Ändere im Gatter-Block **X** zu **Y**.
+1. Ändere im vorhandenen Grundgatter das Dropdown von **X** auf **Y**.
+2. Drücke **Taste A**.
 
 ```blocks
 let circuit = microQiskit.createCircuit(1, 1)
 // @highlight
 microQiskit.applyBasicGate(circuit, microQiskit.BasicGate.Y, 0)
+microQiskit.measureAll(circuit)
+
+input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
+    let job = microQiskit.runSimulationBasic(circuit)
+    basic.showString(microQiskit.getJobResultText(job))
+})
 ```
 
-## Freie Drehungen mit RX
+Auch Y bringt `|0⟩` zum Südpol. Deshalb misst du wieder `1`.
 
-Nicht jede Drehung muss 180° groß sein.
+Der Weg auf der Bloch-Kugel und die Phase unterscheiden sich jedoch vom X-Gatter.
 
-Mit **RX** kannst du einen frei wählbaren Winkel um die X-Achse drehen. Der Winkel wird in **Grad** angegeben.
+## 7. Das Hadamard-Gatter
+
+Das **Hadamard-Gatter**, kurz **H**, bringt `|0⟩` in eine gleichgewichtete Superposition.
+
+In unserer Visualisierung wird H als eine 90°-Drehung um Y und anschließend eine 180°-Drehung um X dargestellt.
+
+![Hadamard-Gatter](https://raw.githubusercontent.com/heini208/makecode_qiskit_tutorial/main/images/hadamard_y90_x180.gif)
+
+1. Ändere das Grundgatter von **Y** auf **H**.
+2. Drücke **Taste A** mehrfach.
+
+```blocks
+let circuit = microQiskit.createCircuit(1, 1)
+// @highlight
+microQiskit.applyBasicGate(circuit, microQiskit.BasicGate.H, 0)
+microQiskit.measureAll(circuit)
+
+input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
+    let job = microQiskit.runSimulationBasic(circuit)
+    basic.showString(microQiskit.getJobResultText(job))
+})
+```
+
+Der Zustand liegt jetzt auf dem Äquator der Bloch-Kugel. Deshalb kann bei jedem Ausführen `0` oder `1` erscheinen.
+
+Beide Ergebnisse haben jeweils 50 % Wahrscheinlichkeit.
+
+## 8. Hadamard zweimal
+
+Ein H-Gatter kann sich selbst wieder rückgängig machen.
+
+Füge ein zweites **H** direkt nach dem ersten ein und drücke **Taste A**.
+
+![Zweimal Hadamard](https://raw.githubusercontent.com/heini208/makecode_qiskit_tutorial/main/images/hadamard_then_hadamard.gif)
+
+```blocks
+let circuit = microQiskit.createCircuit(1, 1)
+microQiskit.applyBasicGate(circuit, microQiskit.BasicGate.H, 0)
+// @highlight
+microQiskit.applyBasicGate(circuit, microQiskit.BasicGate.H, 0)
+microQiskit.measureAll(circuit)
+
+input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
+    let job = microQiskit.runSimulationBasic(circuit)
+    basic.showString(microQiskit.getJobResultText(job))
+})
+```
+
+Der Zustand kehrt zu `|0⟩` zurück. Das Ergebnis ist wieder immer `0`.
+
+Entferne danach das zweite H-Gatter wieder.
+
+## 9. Das Z-Gatter
+
+Das **Z-Gatter** ist eine 180°-Drehung um die Z-Achse.
+
+Wenn das Qubit direkt in `|0⟩` steht, sehen wir auf der Bloch-Kugel keine Positionsänderung. Z verändert in diesem Fall nur die Phase.
+
+Um diese Phasenänderung messbar zu machen, verwenden wir:
+
+**H → Z → H**
+
+1. Lasse das erste **H** stehen.
+2. Füge danach ein Grundgatter **Z** ein.
+3. Füge danach ein weiteres Grundgatter **H** ein.
+4. Drücke **Taste A**.
+
+```blocks
+let circuit = microQiskit.createCircuit(1, 1)
+microQiskit.applyBasicGate(circuit, microQiskit.BasicGate.H, 0)
+// @highlight
+microQiskit.applyBasicGate(circuit, microQiskit.BasicGate.Z, 0)
+microQiskit.applyBasicGate(circuit, microQiskit.BasicGate.H, 0)
+microQiskit.measureAll(circuit)
+
+input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
+    let job = microQiskit.runSimulationBasic(circuit)
+    basic.showString(microQiskit.getJobResultText(job))
+})
+```
+
+Jetzt erhältst du `1`.
+
+Das zeigt einen wichtigen Unterschied: Eine Phase ist bei der direkten Messung nicht sichtbar, kann aber durch spätere Gates in einen messbaren Unterschied umgewandelt werden.
+
+Entferne danach die drei Gates, damit der Circuit wieder leer ist.
+
+## 10. RX mit 90°
+
+Mit **RX** können wir nicht nur um 180°, sondern um einen frei wählbaren Winkel um die X-Achse drehen.
 
 ![RX mit 90 Grad](https://raw.githubusercontent.com/heini208/makecode_qiskit_tutorial/main/images/rx_pi_2.gif)
 
-- :mouse pointer: Öffne **MicroQiskit → Qiskit Grundlagen → Gatter**.
-- :mouse pointer: Suche den **RX**-Block.
-- :mouse pointer: Stelle den Winkel auf **90°**.
+1. Öffne **MicroQiskit → Qiskit Grundlagen → Gatter**.
+2. Ziehe den **RX**-Block vor die Messung.
+3. Stelle den Winkel auf **90°**.
+4. Drücke **Taste A** mehrfach.
 
 ```blocks
 let circuit = microQiskit.createCircuit(1, 1)
 // @highlight
 microQiskit.applyRX(circuit, 90, 0)
+microQiskit.measureAll(circuit)
+
+input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
+    let job = microQiskit.runSimulationBasic(circuit)
+    basic.showString(microQiskit.getJobResultText(job))
+})
 ```
 
-## Drehungen um die Y-Achse
+Nach 90° liegt der Zustand auf dem Äquator. Deshalb treten `0` und `1` jeweils mit 50 % Wahrscheinlichkeit auf.
 
-Für weitere frei wählbare Rotationen gibt es unter **Qiskit Erweitert** einen Rotationsblock.
+## 11. RY mit 90°
 
-Wähle **RY** und einen Winkel von **90°**.
+Jetzt testen wir dieselbe Drehgröße um die Y-Achse.
 
 ![RY mit 90 Grad](https://raw.githubusercontent.com/heini208/makecode_qiskit_tutorial/main/images/ry_pi_2.gif)
+
+1. Entferne den RX-Block.
+2. Öffne **MicroQiskit → Qiskit Erweitert → Gatter**.
+3. Ziehe den Rotationsblock vor die Messung.
+4. Wähle **RY**.
+5. Stelle **90°** ein.
+6. Drücke **Taste A** mehrfach.
 
 ```blocks
 let circuit = microQiskit.createCircuit(1, 1)
 // @highlight
 microQiskit.applyRotationGate(circuit, microQiskit.RotationGate.RY, 90, 0)
-```
-
-## Superposition mit Hadamard
-
-Jetzt kommt eine der wichtigsten Operationen: das **Hadamard-Gatter**, kurz **H**.
-
-Aus dem Startzustand `|0⟩` erzeugt H eine gleichgewichtete Superposition. Bei einer anschließenden Messung erhalten wir `0` und `1` jeweils mit ungefähr gleicher Wahrscheinlichkeit.
-
-In dieser Visualisierung wird H als aufeinanderfolgende Rotation um Y und X dargestellt.
-
-![Hadamard als Y- und X-Rotation](https://raw.githubusercontent.com/heini208/makecode_qiskit_tutorial/main/images/hadamard_y90_x180.gif)
-
-- :mouse pointer: Öffne **MicroQiskit → Qiskit Grundlagen → Gatter**.
-- :mouse pointer: Verwende wieder den Block für ein Grundgatter.
-- :mouse pointer: Wähle diesmal **H**.
-
-```blocks
-let circuit = microQiskit.createCircuit(1, 1)
-// @highlight
-microQiskit.applyBasicGate(circuit, microQiskit.BasicGate.H, 0)
-```
-
-## Zweimal Hadamard
-
-Ein Hadamard-Gatter kann auch wieder rückgängig gemacht werden.
-
-Wendest du **H zweimal** direkt hintereinander an, kehrt das Qubit zum ursprünglichen Zustand zurück.
-
-![Zweimal Hadamard](https://raw.githubusercontent.com/heini208/makecode_qiskit_tutorial/main/images/hadamard_then_hadamard.gif)
-
-Füge ein zweites H-Gatter hinzu.
-
-```blocks
-let circuit = microQiskit.createCircuit(1, 1)
-microQiskit.applyBasicGate(circuit, microQiskit.BasicGate.H, 0)
-// @highlight
-microQiskit.applyBasicGate(circuit, microQiskit.BasicGate.H, 0)
-```
-
-## Messen
-
-Bisher haben wir nur den Quantenzustand verändert. Um ein klassisches Ergebnis zu erhalten, müssen wir messen.
-
-- :mouse pointer: Öffne **MicroQiskit → Qiskit Grundlagen → Messung**.
-- :mouse pointer: Ziehe **alle Qubits in Circuit messen** unter das H-Gatter.
-
-```blocks
-let circuit = microQiskit.createCircuit(1, 1)
-microQiskit.applyBasicGate(circuit, microQiskit.BasicGate.H, 0)
-// @highlight
 microQiskit.measureAll(circuit)
+
+input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
+    let job = microQiskit.runSimulationBasic(circuit)
+    basic.showString(microQiskit.getJobResultText(job))
+})
 ```
 
-Bei der Messung wird das Ergebnis in den klassischen Bits gespeichert.
+Auch hier liegt der Zustand nach 90° auf dem Äquator. Die Messwahrscheinlichkeiten sind deshalb wieder 50 % für `0` und 50 % für `1`.
 
-## Circuit lokal ausführen
+## 12. RZ mit 90°
 
-Jetzt führen wir den Circuit mit der lokalen MicroQiskit-Simulation auf dem Calliope aus.
+Zum Schluss drehen wir um die Z-Achse.
 
-- :mouse pointer: Öffne **MicroQiskit → Qiskit Grundlagen → Simulation**.
-- :mouse pointer: Ziehe **Circuit lokal ausführen** unter die Messung.
+![RZ mit 90 Grad](https://raw.githubusercontent.com/heini208/makecode_qiskit_tutorial/main/images/rz_pi_2.gif)
 
-Der Grundlagen-Block verwendet automatisch **1024 Shots**.
+1. Ändere im Rotationsblock **RY** zu **RZ**.
+2. Lasse den Winkel auf **90°**.
+3. Drücke **Taste A**.
 
 ```blocks
 let circuit = microQiskit.createCircuit(1, 1)
-microQiskit.applyBasicGate(circuit, microQiskit.BasicGate.H, 0)
-microQiskit.measureAll(circuit)
 // @highlight
-let job = microQiskit.runSimulationBasic(circuit)
+microQiskit.applyRotationGate(circuit, microQiskit.RotationGate.RZ, 90, 0)
+microQiskit.measureAll(circuit)
+
+input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
+    let job = microQiskit.runSimulationBasic(circuit)
+    basic.showString(microQiskit.getJobResultText(job))
+})
 ```
 
-Ein **Shot** ist eine einzelne Ausführung mit anschließender Messung.
+Das Qubit startet auf der Z-Achse selbst. Eine Drehung um diese Achse verändert deshalb seine Messwahrscheinlichkeit nicht. Du erhältst weiterhin `0`.
 
-## Ein Ergebnis anzeigen
+RZ verändert aber die Phase und kann deshalb in Kombination mit anderen Gates einen messbaren Effekt haben.
 
-Das Simulationsergebnis wird in einem **Job** gespeichert.
+## Was haben wir gebaut? @showdialog
 
-Mit **Bits als Text** können wir ein Messergebnis als Zeichenkette lesen.
+Du hast jetzt den vollständigen Aufbau eines einfachen Qiskit-Programms verwendet:
 
-- :mouse pointer: Öffne **MicroQiskit → Qiskit Grundlagen → Ergebnisse**.
-- :mouse pointer: Verwende **Bits als Text von Job**.
-- :mouse pointer: Stecke diesen Block in **zeige Text** aus der Kategorie **Grundlagen**.
+1. **Circuit erstellen**
+2. **Qubits mit Gates verändern**
+3. **Qubits messen**
+4. **Circuit ausführen**
+5. **Job erhalten**
+6. **Ergebnis aus dem Job lesen**
 
-```blocks
-let circuit = microQiskit.createCircuit(1, 1)
-microQiskit.applyBasicGate(circuit, microQiskit.BasicGate.H, 0)
-microQiskit.measureAll(circuit)
-let job = microQiskit.runSimulationBasic(circuit)
-// @highlight
-basic.showString(microQiskit.getJobResultText(job))
-```
+Die Bloch-Kugel zeigt den Zustand des Qubits vor der Messung.
 
-Starte das Programm mehrfach. Durch die Superposition kann als Ergebnis `0` oder `1` erscheinen.
+Die Höhe auf der Kugel bestimmt die Wahrscheinlichkeiten von `0` und `1`. Die Position um die Z-Achse enthält zusätzlich Phaseninformation, die spätere Gates beeinflussen kann.
 
-## Mehr als ein Qubit @showdialog
+## Zwei Qubits @showdialog
 
-Mit mehreren Qubits wächst die Anzahl möglicher Basiszustände sehr schnell.
+Mit mehreren Qubits wächst die Anzahl möglicher Basiszustände.
 
 Für `n` Qubits gibt es `2^n` mögliche Bitkombinationen.
 
-* 1 Qubit: `2^1 = 2` Zustände
-* 2 Qubits: `2^2 = 4` Zustände
-* 3 Qubits: `2^3 = 8` Zustände
+* 1 Qubit: `2` Zustände
+* 2 Qubits: `4` Zustände
+* 3 Qubits: `8` Zustände
 
-Zwei Qubits können also die Kombinationen `00`, `01`, `10` und `11` liefern.
+Bei zwei Qubits sind die möglichen Messergebnisse:
+
+* `00`
+* `01`
+* `10`
+* `11`
 
 ## Quantenzufall von 0 bis 3
 
-Erstelle einen neuen Circuit mit **2 Qubits** und **2 klassischen Bits**.
+Jetzt erzeugen wir mit zwei Qubits vier gleich wahrscheinliche Ergebnisse.
 
-Wende auf beide Qubits ein Hadamard-Gatter an. Danach befinden sich alle vier Basiszustände in einer gleichgewichteten Superposition.
-
-- :mouse pointer: Stelle den Circuit auf **2 Qubits** und **2 klassische Bits**.
-- :mouse pointer: Wende **H** auf **Qubit 0** an.
-- :mouse pointer: Wende **H** auf **Qubit 1** an.
-- :mouse pointer: Miss alle Qubits und führe den Circuit lokal aus.
-- :mouse pointer: Zeige das Ergebnis als Text an.
+1. Ändere den Circuit auf **2 Qubits** und **2 klassische Bits**.
+2. Verwende ein **H-Gatter auf Qubit 0**.
+3. Verwende ein **H-Gatter auf Qubit 1**.
+4. Miss beide Qubits.
+5. Führe den Circuit wieder mit **Taste A** aus.
+6. Zeige das Ergebnis mit **Bits als Text** an.
 
 ```blocks
 let circuit = microQiskit.createCircuit(2, 2)
 microQiskit.applyBasicGate(circuit, microQiskit.BasicGate.H, 0)
 microQiskit.applyBasicGate(circuit, microQiskit.BasicGate.H, 1)
 microQiskit.measureAll(circuit)
-let job = microQiskit.runSimulationBasic(circuit)
-basic.showString(microQiskit.getJobResultText(job))
+
+input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
+    let job = microQiskit.runSimulationBasic(circuit)
+    basic.showString(microQiskit.getJobResultText(job))
+})
 ```
 
-Die vier möglichen Ergebnisse können als Zahlen interpretiert werden:
+Drücke **Taste A** mehrfach.
+
+Die vier Bitfolgen entsprechen vier Zahlen:
 
 * `00 = 0`
 * `01 = 1`
 * `10 = 2`
 * `11 = 3`
 
-## Nächster Schritt @showdialog
+Damit haben wir die Grundlage für ein Quanten-Zufallsspiel wie **Schere, Stein, Papier**.
 
-Damit haben wir die Grundlage für ein Spiel geschaffen.
+## Exkurs: echter IBM-Quantencomputer @showdialog
 
-Im nächsten Teil bauen wir aus den Quantenergebnissen **Schere, Stein, Papier** und untersuchen, wie wir die Wahrscheinlichkeiten gezielt verändern können.
+Bisher wurde jeder Circuit direkt auf dem Calliope mit MicroQiskit simuliert.
+
+Der gleiche Circuit kann mit der Erweiterung auch an einen **echten IBM-Quantencomputer** geschickt werden. Dafür wird die separate Qiskit-Bridge auf einem Computer benötigt.
+
+Im Blockbereich **MicroQiskit → Qiskit Grundlagen → Simulation** gibt es dafür **Circuit auf IBM Quantum ausführen**.
+
+Der Ablauf des Programms bleibt gleich:
+
+**Circuit → Gates → Messung → IBM-Job → Ergebnis**
+
+Die Einrichtung des IBM-Kontos, des API-Keys und der Qiskit-Bridge ist hier beschrieben:
+
+[MicroQiskit: Mit IBM Quantum verbinden](https://github.com/heini208/makecode-qiskit#mit-ibm-quantum-verbinden)
 
 ```package
 qiskit=github:heini208/makecode-qiskit#v0.1.2
