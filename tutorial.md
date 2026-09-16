@@ -4,7 +4,7 @@
 
 ## Willkommen @showdialog
 
-**Tutorial-Version 0.0.9, Stand 12.09.2026**
+**Tutorial-Version 0.0.10, Stand 12.09.2026**
 
 Wenn du diese Zeile siehst, ist die aktuell überarbeitete Version des Tutorials geladen.
 
