@@ -179,7 +179,7 @@ Jetzt verändern wir das Qubit mit Gates.
 
 Das **X-Gatter** dreht das Qubit um 180° um die X-Achse. Aus dem Startzustand `|0⟩` wird dadurch `|1⟩`.
 
-![X-Gatter auf der Bloch-Kugel](https://raw.githubusercontent.com/heini208/makecode_qiskit_tutorial/main/images/v008_x_gate.gif)
+![X-Gatter auf der Bloch-Kugel](https://raw.githubusercontent.com/heini208/makecode_qiskit_tutorial/main/images/x_gate.gif)
 
 Probiere X jetzt selbst aus:
 
@@ -208,7 +208,7 @@ input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
 
 Das **Y-Gatter** dreht ebenfalls um 180°, aber um die Y-Achse.
 
-![Y-Gatter auf der Bloch-Kugel](https://raw.githubusercontent.com/heini208/makecode_qiskit_tutorial/main/images/v008_y_gate.gif)
+![Y-Gatter auf der Bloch-Kugel](https://raw.githubusercontent.com/heini208/makecode_qiskit_tutorial/main/images/y_gate.gif)
 
 Probiere Y jetzt selbst aus:
 
@@ -263,7 +263,7 @@ input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
 
 Das **Hadamard-Gatter**, kurz **H**, bringt `|0⟩` in eine gleichgewichtete Superposition.
 
-![Hadamard-Gatter](https://raw.githubusercontent.com/heini208/makecode_qiskit_tutorial/main/images/v008_hadamard_y90_x180.gif)
+![Hadamard-Gatter](https://raw.githubusercontent.com/heini208/makecode_qiskit_tutorial/main/images/hadamard_y90_x180.gif)
 
 Probiere H aus:
 
@@ -291,7 +291,7 @@ input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
 
 Ein H-Gatter kann sich selbst wieder rückgängig machen. Zwei H-Gatter direkt hintereinander bringen das Qubit wieder zu `|0⟩`.
 
-![Zweimal Hadamard](https://raw.githubusercontent.com/heini208/makecode_qiskit_tutorial/main/images/v008_hadamard_then_hadamard.gif)
+![Zweimal Hadamard](https://raw.githubusercontent.com/heini208/makecode_qiskit_tutorial/main/images/hadamard_then_hadamard.gif)
 
 Teste das:
 
@@ -322,7 +322,7 @@ input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
 
 Mit dem Rotationsblock kannst du **RX**, **RY** und **RZ** über ein Dropdown auswählen und zusätzlich einen Winkel einstellen.
 
-![RX mit 90 Grad](https://raw.githubusercontent.com/heini208/makecode_qiskit_tutorial/main/images/v008_rx_pi_2.gif)
+![RX mit 90 Grad](https://raw.githubusercontent.com/heini208/makecode_qiskit_tutorial/main/images/rx_pi_2.gif)
 
 Probiere RX aus:
 
@@ -377,7 +377,7 @@ input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
 
 Jetzt drehen wir um die Y-Achse.
 
-![RY mit 90 Grad](https://raw.githubusercontent.com/heini208/makecode_qiskit_tutorial/main/images/v008_ry_pi_2.gif)
+![RY mit 90 Grad](https://raw.githubusercontent.com/heini208/makecode_qiskit_tutorial/main/images/ry_pi_2.gif)
 
 1. Öffne das Dropdown im Rotationsblock.
 2. Ändere **RX** zu **RY**.
@@ -404,7 +404,7 @@ input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
 
 Zum Schluss drehen wir um die Z-Achse.
 
-![RZ mit 90 Grad](https://raw.githubusercontent.com/heini208/makecode_qiskit_tutorial/main/images/v008_rz_pi_2.gif)
+![RZ mit 90 Grad](https://raw.githubusercontent.com/heini208/makecode_qiskit_tutorial/main/images/rz_pi_2.gif)
 
 1. Öffne das Dropdown im Rotationsblock.
 2. Ändere **RY** zu **RZ**.
